@@ -64,7 +64,7 @@
 
 <br>
 
-## 🇬🇧 English
+## en English
 
 ### The Problem
 In **Dead Cells**, the *Daily Challenge* mode attempts to communicate with Motion Twin's online servers at `https://dead-cells.com`.
@@ -103,25 +103,6 @@ When the backend servers are unavailable, blocked, or offline, the game displays
 ### Uninstallation
 To restore original unmodified game files:
 * Run **`uninstall.bat`** to revert binaries from `.bak` backups and clean up shortcuts.
-
----
-
-## 🛠️ Technical Details & HashLink Architecture
-
-Dead Cells uses the **HashLink** virtual machine (compiled to native C/machine code). During our reverse engineering analysis of `deadcells.exe`, the exact structures required by `LeaderboardPanel` and `daily/seed` were mapped:
-
-```
-Type 1057 (Seed response):
-  date: String, index: Int, runId: String, seed: Int, user: Type 1058, validVersion: Bool
-
-Type 1275 (Leaderboard container):
-  date: String, index: Int, scores: Array<Type 23710>, seed: Int
-
-Type 23710 (Leaderboard entry):
-  name: String, date: Float, isFriend: Bool, isMine: Bool, pos: Int, run: Int, score: Int, state: Int, time: Int
-```
-
-Missing `name` previously resulted in passing `null` to `$Lang.cleanUtf16String (Lang.hx:669)`, crashing the game upon opening the leaderboard. DailyCells provides all fields in exact compliance with HashLink's expected ABI.
 
 ---
 
